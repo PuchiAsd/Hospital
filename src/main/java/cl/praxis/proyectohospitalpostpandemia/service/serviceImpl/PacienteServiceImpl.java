@@ -16,7 +16,7 @@ public class PacienteServiceImpl implements IPacienteService {
     private IPacienteRepository pacienteRepository;
 
     @Override
-    public List<Paciente> getAllPacientes() {
+    public List<Paciente> obtieneListaPacientes() {
 
         return pacienteRepository.findAll();
     }

@@ -13,14 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
+@RequestMapping("/paciente")
 public class PacienteController {
     public static final Logger LOGGER = LoggerFactory.getLogger(PacienteController.class);
     @Autowired
     private IPacienteService pacienteService;
 
-    @GetMapping("/")
-    public String getAllPacientes(Model model){
-        List<Paciente> pacientes = pacienteService.getAllPacientes();
+    @GetMapping("/lista")
+    public String obtieneListaPacientes(Model model){
+        List<Paciente> pacientes = pacienteService.obtieneListaPacientes();
         LOGGER.info("Obtiene todos los pacientes " + pacientes);
         model.addAttribute("ListaPacientes",pacientes);
         return "index";
