@@ -6,36 +6,109 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
-<body>
-<section class="container">
-    <h2>Tabla de Pacientes</h2>
-    <table class="table">
-        <thead class="table-header">
-        <tr>
-            <th>ID</th>
-            <th>Run</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Edad</th>
-            <th>Previsión</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="paciente : ${ListaPacientes}">
-            <td th:text="${paciente.id}"></td>
-            <td th:text="${paciente.run}"></td>
-            <td th:text="${paciente.nombre}"></td>
-            <td th:text="${paciente.apellido}"></td>
-            <td th:text="${paciente.edad}"></td>
-            <td th:text="${paciente.prevision}"></td>
-        </tr>
-        </tbody>
-    </table>
-</section>
+<body class="container">
+    <section>
+        <h2 class="text-center">Tabla de Pacientes</h2>
+
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarPaciente">Agregar Paciente</button>
+
+        <table class="table table-primary mt-2">
+            <thead class="table-header">
+            <tr>
+                <th class="text-center">ID</th>
+                <th class="text-center">Run</th>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Apellido</th>
+                <th class="text-center">Edad</th>
+                <th class="text-center">Previsión</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="paciente : ${ListaPacientes}">
+                <td class="text-center" th:text="${paciente.id}"></td>
+                <form th:action="@{/paciente/nuevo}" th:object="${paciente}" method="post">
+                    <input name="id" type="hidden" th:value="${paciente.id}" />
+                    <td>
+                        <input name="run" type="text" class="form-control" th:value="${paciente.run}" />
+                    </td>
+                    <td>
+                        <input name="nombre" type="text" class="form-control" th:value="${paciente.nombre}" />
+                    </td>
+                    <td>
+                        <input name="apellido" type="text" class="form-control" th:value="${paciente.apellido}" />
+                    </td>
+                    <td>
+                        <input name="edad" type="text" class="form-control" th:value="${paciente.edad}" />
+                    </td>
+                    <td>
+                        <input name="prevision" type="text" class="form-control" th:value="${paciente.prevision}" />
+                    </td>
+                    <td class="text-center" style="display: flex !important;">
+                        <button type="submit" class="btn btn-warning">Modificar</button>
+                        <a class="btn btn-danger" th:href="@{/paciente/eliminar/{id}(id=${paciente.id})}">Eliminar</a>
+                    </td>
+                </form>
+
+                <!--
+                <td class="text-center" th:text="${paciente.run}"></td>
+                <td class="text-center" th:text="${paciente.nombre}"></td>
+                <td class="text-center" th:text="${paciente.apellido}"></td>
+                <td class="text-center" th:text="${paciente.edad}"></td>
+                <td class="text-center" th:text="${paciente.prevision}"></td>
+                <td class="text-center">
+                    <a class="btn btn-danger" th:href="@{/paciente/eliminar/{id}(id=${paciente.id})}">Eliminar</a>
+                 </td>
+                 -->
+             </tr>
+             </tbody>
+         </table>
+
+         <div class="modal fade" id="agregarPaciente" tabindex="-1" aria-labelledby="newRoleModalLabel" aria-hidden="true">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h5 class="modal-title" id="newRoleModalLabel">Agregar Nuevo paciente</h5>
+                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                         <form th:action="@{/paciente/nuevo}" method="post">
+                             <div class="mb-3">
+                                 <label for="run" class="form-label">Run</label>
+                                 <input type="text" class="form-control" id="run" name="run" required>
+                             </div>
+                             <div class="mb-3">
+                                 <label for="nombre" class="form-label">Nombre</label>
+                                 <input type="text" class="form-control" id="nombre" name="nombre" required>
+                             </div>
+                             <div class="mb-3">
+                                 <label for="apellido" class="form-label">Apellido</label>
+                                 <input type="text" class="form-control" id="apellido" name="apellido" required>
+                             </div>
+                             <div class="mb-3">
+                                 <label for="edad" class="form-label">Edad</label>
+                                 <input type="text" class="form-control" id="edad" name="edad" required>
+                             </div>
+                             <div class="mb-3">
+                                 <label for="prevision" class="form-label">Previsión</label>
+                                 <input type="text" class="form-control" id="prevision" name="prevision" required>
+                             </div>
+                             <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                 <button type="submit" class="btn btn-primary">Guardar</button>
+                             </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+         </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+     </section>
+
+
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+         crossorigin="anonymous"></script>
+ </body>
+ </html>
